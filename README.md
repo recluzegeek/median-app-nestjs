@@ -17,6 +17,10 @@ cp .env.example .env
 npm install
 ```
 
+Generate Prisma types via `npx prisma generate` and do migrations via `npx prisma migrate dev --name your-migration-name`, then seed the db via `npx prisma seed db`
+
+Generate prisma client whenever you change the database or models schema so IDE and TS can give better intellisense and autocompletions.
+
 ## Compile and run the project
 
 ```bash
