@@ -16,8 +16,7 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         const status = HttpStatus.CONFLICT;
         response.status(status).json({
           statusCode: status,
-
-          message: message,
+          message: message || 'Record already exists.',
         });
         break;
       }
@@ -29,6 +28,14 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         });
         break;
       }
+      // case 'P2025': {
+      //   const status = HttpStatus.NOT_FOUND;
+      //   response.status(status).json({
+      //     statusCode: status,
+      //     message: message || 'Record Not Found.',
+      //   });
+      //   break;
+      // }
       default:
         // default 500 error code
         super.catch(exception, host);

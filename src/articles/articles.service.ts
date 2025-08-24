@@ -12,7 +12,10 @@ export class ArticlesService {
   }
 
   findAll() {
-    return this.prisma.article.findMany({ where: { published: true } });
+    return this.prisma.article.findMany({
+      where: { published: true },
+      include: { author: true },
+    });
   }
 
   findDrafts() {
@@ -20,9 +23,14 @@ export class ArticlesService {
   }
 
   async findOne(id: number) {
-    const user = await this.prisma.article.findUnique({ where: { id } });
+    const user = await this.prisma.article.findUnique({
+      where: { id, published: true },
+      include: { author: true },
+    });
     if (!user) {
-      throw new NotFoundException(`Article with #${id} id does not exists.`);
+      throw new NotFoundException(
+        `Article with #${id} id does not exists or currently in DRAFT.`,
+      );
     }
     return user;
   }
@@ -35,7 +43,7 @@ export class ArticlesService {
   }
 
   remove(id: number) {
-    return this.prisma.user.delete({
+    return this.prisma.article.delete({
       where: {
         id,
       },
