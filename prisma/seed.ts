@@ -65,7 +65,6 @@ async function main() {
       description:
         'This article will explore various ways you can use Prisma Client extensions to add custom functionality to Prisma Client..',
       published: true,
-      authorId: user1.id,
     },
   });
 

@@ -8,6 +8,14 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+This repo uses:
+
+- NestJS as the backend framework
+- Prisma as the Object-Relational Mapper (ORM)
+- PostgreSQL as the database
+- Swagger as the API documentation tool
+- TypeScript as the programming language
+
 ## Project setup
 
 Modify the environment variables in the `.env` file and then install the dependencies.

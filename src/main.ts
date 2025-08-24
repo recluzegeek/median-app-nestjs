@@ -10,13 +10,13 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const config = new DocumentBuilder()
-    .setTitle('Miniblog API')
+    .setTitle('Median - Mini Medium Clone')
     .setDescription(
       'A simple API to manage users and blog posts with easy-to-use endpoints in NestJS.',
     )
     .setVersion('1.0.0')
     .addTag('Users', 'Everything about user accounts')
-    // .addTag('Articles', 'Manage blog articles: create, read, update, delete')
+    .addTag('Articles', 'Manage blog articles: create, read, update, delete')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
