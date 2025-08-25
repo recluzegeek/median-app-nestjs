@@ -11,42 +11,50 @@ export class ArticlesService {
     return this.prisma.article.create({ data: createArticleDto });
   }
 
-  findAll() {
-    return this.prisma.article.findMany({
+  async findAll() {
+    return await this.prisma.article.findMany({
       where: { published: true },
       include: { author: true },
     });
   }
 
-  findDrafts() {
-    return this.prisma.article.findMany({ where: { published: false } });
+  async findDrafts() {
+    return await this.prisma.article.findMany({ where: { published: false } });
   }
 
   async findOne(id: number) {
-    const user = await this.prisma.article.findUnique({
-      where: { id, published: true },
+    const article = await this.prisma.article.findUnique({
+      where: { id },
       include: { author: true },
     });
-    if (!user) {
-      throw new NotFoundException(
-        `Article with #${id} id does not exists or currently in DRAFT.`,
-      );
+    if (!article) {
+      throw new NotFoundException(`Article with #${id} id does not exists.`);
     }
-    return user;
+    return article;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    await this.ensureArticleExists(id);
     return this.prisma.article.update({
       where: { id },
       data: updateArticleDto,
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    await this.ensureArticleExists(id);
     return this.prisma.article.delete({
       where: {
         id,
       },
     });
+  }
+
+  private async ensureArticleExists(id: number) {
+    const article = await this.prisma.article.findUnique({ where: { id } });
+    if (!article) {
+      throw new NotFoundException(`Article with #${id} id does not exists.`);
+    }
+    return article;
   }
 }

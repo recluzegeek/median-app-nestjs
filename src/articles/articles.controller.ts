@@ -8,8 +8,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -36,7 +43,9 @@ export class ArticlesController {
   }
 
   @Get('drafts')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
+  @ApiBearerAuth()
   async findDrafts() {
     const drafts = await this.articlesService.findDrafts();
     return drafts.map((article) => new ArticleEntity(article));
