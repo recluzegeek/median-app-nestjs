@@ -16,8 +16,10 @@ async function bootstrap() {
       'A simple API to manage users and blog posts with easy-to-use endpoints in NestJS.',
     )
     .setVersion('1.0.0')
+    .addBearerAuth()
     .addTag('Users', 'Everything about user accounts')
     .addTag('Articles', 'Manage blog articles: create, read, update, delete')
+    .addTag('Auth', 'Manage User Authentication')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

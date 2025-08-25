@@ -27,6 +27,7 @@ export class ArticleEntity implements Article {
   @ApiProperty({ required: false, nullable: true })
   authorId: number | null;
 
+  @ApiProperty({ required: false, type: UserEntity })
   author?: UserEntity | null;
 
   // Wrapped author with UserEntity to prevent exposing password in article responses.
