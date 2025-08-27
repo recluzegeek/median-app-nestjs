@@ -25,6 +25,22 @@ const router = createRouter({
       name: 'courses',
       component: () => import('@/views/CoursesView.vue'),
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/admin/AdminDashboard.vue'),
+    },
+    {
+      path: '/admin/articles/new',
+      name: 'admin-article-new',
+      component: () => import('@/views/admin/AdminArticleForm.vue'),
+    },
+    {
+      path: '/admin/articles/:id/edit',
+      name: 'admin-article-edit',
+      component: () => import('@/views/admin/AdminArticleForm.vue'),
+      props: true,
+    },
   ],
 })
 
