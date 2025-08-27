@@ -35,7 +35,7 @@ const formatDate = (dateString: string) => {
         {{ formatDate(article.createdAt) }}
       </p>
 
-      <!-- Article Excerpt -->
+      <!-- Article Descrption -->
       <p class="text-gray-300 leading-relaxed line-clamp-3">
         {{ article.description }}
       </p>

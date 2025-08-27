@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import ArticleCard from '@/components/ArticleCard.vue'
 import FilterButtons from '@/components/FilterButtons.vue'
 import { useArticles } from '@/composables/useArticles'
+import { computed, onMounted, ref } from 'vue'
 
 const { articles, loading, error, fetchArticles } = useArticles()
 const activeFilter = ref('Most Recent')
@@ -26,6 +26,15 @@ const handleFilterChange = (filter: string) => {
 onMounted(() => {
   fetchArticles()
 })
+
+// Lazy loading with Load More
+const visibleCount = ref(6)
+const totalRecords = computed(() => articles.value.length)
+const visibleArticles = computed(() => articles.value.slice(0, visibleCount.value))
+const canLoadMore = computed(() => visibleCount.value < totalRecords.value)
+const loadMore = () => {
+  visibleCount.value = Math.min(visibleCount.value + 6, totalRecords.value)
+}
 </script>
 
 <template>
@@ -52,13 +61,14 @@ onMounted(() => {
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <ArticleCard v-for="article in articles" :key="article.id" :article="article" />
+        <ArticleCard v-for="article in visibleArticles" :key="article.id" :article="article" />
       </div>
 
       <!-- Load More Button -->
-      <div class="text-center">
+      <div class="text-center" v-if="canLoadMore">
         <button
           class="px-6 py-3 border border-gray-600 text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
+          @click="loadMore"
         >
           Load more
         </button>

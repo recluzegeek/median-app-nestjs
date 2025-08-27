@@ -20,9 +20,10 @@ const isActive = (path: string) => {
       <div class="flex justify-between items-center h-16">
         <!-- Author name -->
         <div class="flex-shrink-0">
-          <h1 class="text-xl font-semibold text-white">Muhammad Salman</h1>
+          <router-link to="/" class="text-xl font-semibold text-white">
+            Muhammad Salman
+          </router-link>
         </div>
-
         <!-- Navigation links -->
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-8">
