@@ -1,10 +1,10 @@
 {
-  "name": "blog-app-nestjs",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "@nestvue/backend",
+  "version": "0.1.1",
+  "description": "NestJS-based backend API for the NestVue blog platform.",
+  "author": "recluzegeek",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -83,5 +83,27 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "nestjs",
+    "nodejs",
+    "express",
+    "api",
+    "rest",
+    "backend",
+    "server",
+    "blog",
+    "cms",
+    "typescript",
+    "prisma",
+    "postgresql",
+    "jwt",
+    "auth",
+    "nestjs-rest-api"
+  ],
+  "type": "commonjs"
 }

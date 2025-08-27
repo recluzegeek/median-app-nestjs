@@ -1,0 +1,29 @@
+{
+  "name": "@nestvue/frontend",
+  "version": "1.0.0",
+  "description": "Vue.js-based frontend UI for the NestVue blog platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vite",
+    "primevue",
+    "frontend",
+    "spa",
+    "blog",
+    "cms",
+    "javascript",
+    "typescript",
+    "tailwindcss",
+    "ui",
+    "nestvue",
+    "vue3",
+    "composition-api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "nestvue-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "npm run workspace app-backend start:dev",
+    "dev:frontend": "npm run workspace app-frontend start:dev",
+    "dev": "npm run workspaces start:dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/recluzegeek/median-app-nestjs.git"
+  },
+  "keywords": [
+    "nestjs-blog",
+    "vuejs-blog"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/recluzegeek/median-app-nestjs/issues"
+  },
+  "homepage": "https://github.com/recluzegeek/median-app-nestjs#readme",
+  "workspaces": [
+    "apps/blog-frontend",
+    "apps/blog-backend"
+  ]
+}
