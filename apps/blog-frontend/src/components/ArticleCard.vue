@@ -18,7 +18,10 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <article class="group cursor-pointer">
+  <article
+    class="group cursor-pointer"
+    @click="$router.push({ name: 'article-detail', params: { id: article.id } })"
+  >
     <div class="space-y-3">
       <!-- Article Title -->
       <h3
@@ -29,12 +32,12 @@ const formatDate = (dateString: string) => {
 
       <!-- Publication Date -->
       <p class="text-sm text-gray-400">
-        {{ formatDate(article.publishedAt) }}
+        {{ formatDate(article.createdAt) }}
       </p>
 
       <!-- Article Excerpt -->
       <p class="text-gray-300 leading-relaxed line-clamp-3">
-        {{ article.excerpt }}
+        {{ article.description }}
       </p>
     </div>
   </article>
