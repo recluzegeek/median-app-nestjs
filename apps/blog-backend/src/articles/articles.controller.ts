@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -28,10 +29,16 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: ArticleEntity })
-  async create(@Body() createArticleDto: CreateArticleDto) {
+  @ApiBearerAuth()
+  // TODO: type safe the req
+  async create(@Body() createArticleDto: CreateArticleDto, @Req() req: any) {
     return new ArticleEntity(
-      await this.articlesService.create(createArticleDto),
+      await this.articlesService.create({
+        ...createArticleDto,
+        authorId: req.user.id,
+      }),
     );
   }
 
@@ -39,6 +46,12 @@ export class ArticlesController {
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
   async findAll() {
     const articles = await this.articlesService.findAll();
+    return articles.map((article) => new ArticleEntity(article));
+  }
+
+  @Get('by-author/:username')
+  async findByAuthor(@Param('username') username: string) {
+    const articles = await this.articlesService.findByAuthorUsername(username);
     return articles.map((article) => new ArticleEntity(article));
   }
 
@@ -58,7 +71,9 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: ArticleEntity })
+  @ApiBearerAuth()
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdateArticleDto,
@@ -69,7 +84,9 @@ export class ArticlesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: ArticleEntity })
+  @ApiBearerAuth()
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new ArticleEntity(await this.articlesService.remove(id));
   }

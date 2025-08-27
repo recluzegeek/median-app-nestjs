@@ -18,6 +18,15 @@ export class ArticlesService {
     });
   }
 
+  async findByAuthorUsername(username: string) {
+    return await this.prisma.article.findMany({
+      where: {
+        author: { username },
+        published: true,
+      },
+    });
+  }
+
   async findDrafts() {
     return await this.prisma.article.findMany({ where: { published: false } });
   }

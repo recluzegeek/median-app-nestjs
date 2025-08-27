@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
 import { useArticles } from '@/composables/useArticles'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
 import Button from 'primevue/button'
+import Column from 'primevue/column'
+import DataTable from 'primevue/datatable'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

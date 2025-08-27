@@ -1,78 +1,66 @@
 # @nestvue/frontend
 
-This is the Vue 3 frontend for the **NestVue Blog App**, a full-stack blog platform powered by NestJS and Vue, managed as a monorepo using npm workspaces.
+A modern Vue 3 frontend for the NestVue Blog App. Built with the Composition API, TypeScript, TailwindCSS, and PrimeVue components. The focus is a clean and minimal reading experience.
 
-The frontend is built with **Vite**, **TypeScript**, **PrimeVue**, and **Tailwind CSS**, offering a clean and responsive interface for blog readers and admins.
+## What’s included (MVP)
 
-## Tech Stack
+- Home page that lists recent articles in a two-column layout
+- Article cards showing title, published date, and short description
+- Simple lazy loading with a Load more button on list pages
+- Article detail page routed by id at `/articles/:id`
+- PrimeVue is configured globally with a modern theme
+- Navigation bar with links to Home and Articles
+- Composition API composables for fetching articles
+- Type-safe components and views using Vue + TypeScript
 
-- **Vue 3** – Modern JavaScript framework
-- **Vite** – Fast build and dev environment
-- **TypeScript** – Static typing
-- **Tailwind CSS** – Utility-first CSS
-- **PrimeVue** – Rich UI components
+## Structure
 
----
-
-## Directory
-
-This app is located at:
-
-```bash
-apps/blog-frontend/
+```
+src/
+├── components/
+│   ├── ArticleCard.vue           # Reusable card
+│   └── FilterButtons.vue         # Simple filter chips (visual only for now)
+├── composables/
+│   └── useArticles.ts            # Fetch and manage article state
+├── services/
+│   └── api.ts                    # API service wrapper
+├── views/
+│   ├── HomeView.vue              # Article list with Load more
+│   ├── ArticlesView.vue          # Dedicated list view with Load more
+│   └── ArticleDetailView.vue     # Article content by id
+├── router/
+│   └── index.ts                  # Routes including /articles/:id
+├── App.vue                       # Layout shell and navbar
+└── main.ts                       # App and PrimeVue setup
 ```
 
-## Getting Started
+## Development
 
-### 1. Install dependencies (from root)
+Install dependencies at the repository root and run the frontend workspace:
 
 ```bash
 npm install
-```
-
-> The project uses npm workspaces. Installing from the root will install all packages across the monorepo.
-
-### 2. Start the development server
-
-From the monorepo root:
-
-```bash
-npm run --workspace @nestvue/frontend start:dev
-```
-
-Or use the root alias if configured:
-
-```bash
 npm run dev:frontend
 ```
 
-Then visit:
-[http://localhost:5173](http://localhost:5173)
+The app will be available at `http://localhost:5173`.
 
----
+## Styling and UI
 
-## Available Scripts
+- TailwindCSS provides the base layout and spacing
+- PrimeVue supplies essential UI elements; the global theme is already configured
+- The design uses a dark background with accessible contrast and minimalist accents
 
-From within `apps/blog-frontend/`:
+## Notes
 
-### Compile and hot-reload for development
+- The article lists currently use client-side lazy loading for simplicity
+- Backend endpoints used by the MVP:
+  - `GET /articles` – list published articles
+  - `GET /articles/:id` – article by id
+- Filtering options are displayed but not wired to the API yet
 
-```bash
-npm run dev
-```
+## Next steps (when needed)
 
-### Type-check, compile, and minify for production
-
-```bash
-npm run build
-```
-
-### Run ESLint
-
-```bash
-npm run lint
-```
-
-## License
-
-MIT License. See root of the monorepo for license information.
+- Move from client-side lazy loading to server-side pagination
+- Implement filtering (category/tag/search) against the backend
+- Add authentication and protected authoring flows
