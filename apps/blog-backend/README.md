@@ -1,57 +1,55 @@
 <p align="center">
-  <a href="https://nestjs.com/" target="_blank"><img src="https://nestjs.com/img/logo-small.svg" width="100" alt="NestJS Logo" /></a>
+  <a href="https://nestjs.com/" target="_blank">
+    <img src="https://nestjs.com/img/logo-small.svg" width="100" alt="NestJS Logo" />
+  </a>
 </p>
 
 <p align="center">
-  A simple and clean Blog Management API built with NestJS, Prisma, and PostgreSQL.
+  A RESTful blog API built with NestJS, Prisma, and PostgreSQL.
 </p>
 
-## Introduction
+# @nestvue/backend
 
-This is a basic blog backend built with [NestJS](https://nestjs.com/) as part of a take-home assignment. It covers essential CRUD operations for blog posts, along with optional features like user authentication using JWT.
+This is the backend API for the **NestVue Blog App**, a full-stack blog platform managed as an npm workspaces monorepo.
 
-The app follows RESTful principles and uses Prisma as the ORM to connect to a PostgreSQL database. Swagger is used for API documentation.
+It provides core functionality for managing blog posts, users, and authentication, using JWT for secure access. The app is built following RESTful principles and includes Swagger documentation.
 
 ## Tech Stack
 
-This project uses:
-
-* **NestJS** — backend framework
-* **Prisma** — ORM for database access
-* **PostgreSQL** — database
-* **JWT** — for user authentication
-* **Swagger** — API documentation
-* **TypeScript** — language of choice
+- **NestJS** – Node.js backend framework
+- **Prisma** – ORM for PostgreSQL
+- **PostgreSQL** – Relational database
+- **JWT** – Authentication
+- **Swagger** – Auto-generated API docs
+- **TypeScript**
 
 ## Getting Started
 
-### 1. Clone the repo
+> This package lives inside a monorepo and is located at:  
+> `apps/blog-backend`
 
-```bash
-git clone https://github.com/recluzegeek/median-app-nestjs.git
-cd your-repo
-```
+### 1. Setup environment variables
 
-### 2. Set up environment variables
-
-Copy the example `.env` file and fill in your own values:
+Copy the example `.env` file:
 
 ```bash
 cp .env.example .env
-```
+````
 
-Make sure to update:
+Update the following variables:
 
-* `DATABASE_URL`
-* `JWT_SECRET`
+- `DATABASE_URL`
+- `JWT_SECRET`
 
-### 3. Install dependencies
+### 2. Install dependencies (from root)
+
+Install everything from the monorepo root:
 
 ```bash
 npm install
 ```
 
-### 4. Set up the database
+### 3. Setup the database
 
 ```bash
 npx prisma generate
@@ -59,58 +57,54 @@ npx prisma migrate dev --name init
 npx prisma db seed
 ```
 
-> Run `npx prisma generate` again anytime you update the Prisma schema.
+## Running the Backend
 
----
-
-## Running the App
+You can run this package from the monorepo root using npm workspace commands:
 
 ```bash
 # Start in development mode
-npm run start:dev
+npm run start:dev --workspace @nestvue/backend
 
 # Start normally
-npm run start
+npm run start --workspace @nestvue/backend
 
-# Build and start for production
-npm run start:prod
+# Build and run for production
+npm run start:prod --workspace @nestvue/backend
 ```
 
-## Features
+Or use root-level shortcuts if configured:
 
-### Articles API
+```bash
+npm run dev:backend
+```
 
-* `GET /articles` – list all published articles
-* `GET /articles/drafts` – list all drafts
-* `GET /articles/:id` – get a single article (draft or published)
-* `POST /articles` – create a new article
-* `PATCH /articles/:id` – update an article
-* `DELETE /articles/:id` – delete an article
+## API Endpoints
 
-> Article management routes are **protected** and require authentication.
+### Articles
 
-### Users API
+- `GET /articles` – list all published articles
+- `GET /articles/drafts` – list all drafts
+- `GET /articles/:id` – get a single article
+- `POST /articles` – create a new article
+- `PATCH /articles/:id` – update an article
+- `DELETE /articles/:id` – delete an article
 
-* `POST /user` – create a new user
-* `GET /user` – list all users
-* `GET /user/:id` – get user by ID
-* `PATCH /user/:id` – update user
-* `DELETE /user/:id` – delete user
+> Article routes require authentication.
 
-### Authentication (Bonus)
+### Users
 
-* `POST /auth/register` – register a user
-* `POST /auth/login` – login and receive a JWT token
+- `POST /user` – create user
+- `GET /user` – list users
+- `GET /user/:id` – get user by ID
+- `PATCH /user/:id` – update user
+- `DELETE /user/:id` – delete user
 
-JWT tokens are required for authenticated routes like creating or updating articles.
+### Auth
 
-### Exception Handling & Validation
+- `POST /auth/register` – register a new user
+- `POST /auth/login` – log in and receive a JWT token
 
-* Global exception filtering with NestJS to handle errors gracefully
-* Input validation and transformation using DTOs and `class-validator`
-* Prisma error handling wrapped for meaningful API responses
-
-### Swagger Documentation
+## Swagger API Docs
 
 Available at:
 
@@ -118,24 +112,23 @@ Available at:
 http://localhost:3000/api
 ```
 
-You can explore all routes, input types, and try requests directly from there.
-
----
+Use this to explore and test endpoints with live documentation.
 
 ## Project Structure
 
-```bashn
+```bash
+apps/blog-backend/
 ├── prisma/
-│   └── schema.prisma         → database schema
-│   └── seed.ts               → sample seed data
+│   ├── schema.prisma       → Database schema
+│   └── seed.ts             → Sample seed data
 ├── src/
-│   ├── articles/             → article module (controllers, services, DTOs)
-│   ├── auth/                 → auth module (login, register, JWT strategy)
-│   ├── users/                → user module
-│   ├── prisma/               → PrismaService wrapper
-│   └── main.ts               → application entry point
+│   ├── articles/           → Blog article module
+│   ├── auth/               → Auth module (JWT, guards)
+│   ├── users/              → User module
+│   ├── prisma/             → PrismaService wrapper
+│   └── main.ts             → App entry point
 ```
 
-## 📄 License
+## License
 
-NestJS is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+MIT License. See [NestJS License](https://github.com/nestjs/nest/blob/master/LICENSE).

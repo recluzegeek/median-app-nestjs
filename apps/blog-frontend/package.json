@@ -1,10 +1,21 @@
 {
   "name": "@nestvue/frontend",
-  "version": "1.0.0",
   "description": "Vue.js-based frontend UI for the NestVue blog platform",
-  "main": "index.js",
+  "author": "recluzegeek",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
   },
   "keywords": [
     "vue",
@@ -23,7 +34,5 @@
     "vue3",
     "composition-api"
   ],
-  "author": "",
-  "license": "MIT",
-  "type": "commonjs"
+  "license": "MIT"
 }
