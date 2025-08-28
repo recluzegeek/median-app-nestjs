@@ -1,9 +1,16 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
+async function hashPassword(plainPassword: string): Promise<string> {
+  const saltRounds = 10;
+  return await bcrypt.hash(plainPassword, saltRounds);
+}
+
 async function main() {
-  // create two dummy users
+  const hashedPasswordSabin = await hashPassword('password-sabin');
+  const hashedPasswordAlex = await hashPassword('password-alex');
 
   const user1 = await prisma.user.upsert({
     where: { email: 'sabin@adams.com' },
@@ -11,7 +18,8 @@ async function main() {
     create: {
       email: 'sabin@adams.com',
       name: 'Sabin Adams',
-      password: 'password-sabin',
+      password: hashedPasswordSabin,
+      username: 'sabinadams',
     },
   });
 
@@ -21,7 +29,8 @@ async function main() {
     create: {
       email: 'alex@ruheni.com',
       name: 'Alex Ruheni',
-      password: 'password-alex',
+      password: hashedPasswordAlex,
+      username: 'ruheni',
     },
   });
 
@@ -65,6 +74,7 @@ async function main() {
       description:
         'This article will explore various ways you can use Prisma Client extensions to add custom functionality to Prisma Client..',
       published: true,
+      authorId: user1.id,
     },
   });
 

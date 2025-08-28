@@ -7,6 +7,9 @@ export interface ApiResponse<T> {
 }
 
 export class ApiService {
+  private static accessToken: string | null = null
+  private static refreshToken: string | null = null
+
   private static async request<T>(
     endpoint: string,
     options: RequestInit = {},
@@ -16,6 +19,7 @@ export class ApiService {
     const defaultOptions: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
+        ...(this.accessToken ? { Authorization: `Bearer ${this.accessToken}` } : {}),
         ...options.headers,
       },
     }
@@ -23,11 +27,31 @@ export class ApiService {
     const config = { ...defaultOptions, ...options }
 
     try {
-      const response = await fetch(url, config)
-      const data = await response.json()
+      let response = await fetch(url, config)
+      let data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || `HTTP error! status: ${response.status}`)
+        if (response.status === 401 && this.refreshToken) {
+          const refreshed = await this.refreshAccessToken()
+          if (refreshed) {
+            const retryConfig = {
+              ...config,
+              headers: {
+                ...(config.headers || {}),
+                Authorization: `Bearer ${this.accessToken}`,
+              },
+            }
+            response = await fetch(url, retryConfig)
+            data = await response.json()
+            if (!response.ok) {
+              throw new Error(data.message || `HTTP error! status: ${response.status}`)
+            }
+          } else {
+            throw new Error(data.message || `HTTP error! status: ${response.status}`)
+          }
+        } else {
+          throw new Error(data.message || `HTTP error! status: ${response.status}`)
+        }
       }
 
       return {
@@ -70,21 +94,43 @@ export class ApiService {
 
   // Auth
   static async login(credentials: { email: string; password: string }): Promise<ApiResponse<any>> {
-    return this.request('/auth/login', {
+    const res = await this.request('/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     })
+    // Save tokens
+    this.accessToken = (res.data as any).accessToken
+    this.refreshToken = (res.data as any).refreshToken
+    return res
   }
 
   static async register(userData: {
     email: string
     password: string
     name: string
+    username: string
   }): Promise<ApiResponse<any>> {
     return this.request('/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     })
+  }
+
+  static async refreshAccessToken(): Promise<boolean> {
+    if (!this.refreshToken) return false
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken: this.refreshToken }),
+      })
+      if (!res.ok) return false
+      const data = await res.json()
+      this.accessToken = data.accessToken
+      return true
+    } catch (e) {
+      return false
+    }
   }
 
   // Users

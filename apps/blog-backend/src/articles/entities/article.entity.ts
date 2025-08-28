@@ -25,10 +25,10 @@ export class ArticleEntity implements Article {
   updatedAt: Date;
 
   @ApiProperty({ required: false, nullable: true })
-  authorId: number | null;
+  authorId: number;
 
   @ApiProperty({ required: false, type: UserEntity })
-  author?: UserEntity | null;
+  author?: UserEntity;
 
   // Wrapped author with UserEntity to prevent exposing password in article responses.
   constructor({ author, ...data }: Partial<ArticleEntity>) {
@@ -38,4 +38,5 @@ export class ArticleEntity implements Article {
       this.author = new UserEntity(author);
     }
   }
+  categories: string[];
 }

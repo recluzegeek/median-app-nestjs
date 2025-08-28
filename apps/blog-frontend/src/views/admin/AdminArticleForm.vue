@@ -3,6 +3,7 @@ import { useArticles, type Article } from '@/composables/useArticles'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
+import ToggleButton from 'primevue/togglebutton'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -15,6 +16,7 @@ const form = ref<Partial<Article>>({
   title: '',
   description: '',
   body: '',
+  published: false,
 })
 
 onMounted(async () => {
@@ -78,6 +80,11 @@ const onSubmit = async () => {
             root: 'bg-gray-800 border-gray-600 text-white placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500',
           }"
         />
+      </div>
+
+      <div>
+        <label class="block mb-2 text-gray-300">Publish</label>
+        <ToggleButton v-model="form.published" onLabel="Published" offLabel="Draft" />
       </div>
 
       <div class="flex gap-3">

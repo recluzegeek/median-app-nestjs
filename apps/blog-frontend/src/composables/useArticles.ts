@@ -8,6 +8,7 @@ export interface Article {
   description: string
   createdAt: string
   authorId: number
+  published: boolean
   author?: {
     id: number
     name: string
@@ -41,6 +42,7 @@ export function useArticles() {
           description:
             'Learn the key differences between post flush watchers and nextTick, and when to use each in your Vue applications.',
           createdAt: '2025-08-01T00:00:00Z',
+          published: true,
           authorId: 1,
           author: {
             id: 1,
@@ -55,6 +57,7 @@ export function useArticles() {
           description:
             "Discover best practices for creating watchers that won't break your Vue application.",
           createdAt: '2025-08-01T00:00:00Z',
+          published: false,
           authorId: 1,
           author: {
             id: 1,
@@ -69,6 +72,7 @@ export function useArticles() {
           description: 'Master the useTemplateRef composable for direct DOM manipulation in Vue 3.',
           createdAt: '2025-05-01T00:00:00Z',
           authorId: 1,
+          published: true,
           author: {
             id: 1,
             name: 'Michael Thiessen',
@@ -81,6 +85,7 @@ export function useArticles() {
           body: 'Architectural patterns for maintaining clean and scalable Vue.js applications...',
           description:
             'Explore four proven patterns that will help you scale your Vue application while keeping it maintainable.',
+          published: true,
           createdAt: '2024-12-01T00:00:00Z',
           authorId: 1,
           author: {
@@ -96,6 +101,7 @@ export function useArticles() {
           description:
             'Deep dive into effect scopes and how they help manage reactive effects in Vue 3.',
           createdAt: '2025-08-01T00:00:00Z',
+          published: true,
           authorId: 1,
           author: {
             id: 1,
@@ -110,6 +116,7 @@ export function useArticles() {
           description:
             'See how junior and senior developers approach building modal components differently.',
           createdAt: '2025-06-01T00:00:00Z',
+          published: false,
           authorId: 1,
           author: {
             id: 1,
@@ -123,6 +130,7 @@ export function useArticles() {
           body: 'Essential tips for writing better composables in Vue 3...',
           description:
             'Learn 13 practical tips that will improve your Vue composables and make your code more maintainable.',
+          published: true,
           createdAt: '2025-01-01T00:00:00Z',
           authorId: 1,
           author: {
@@ -137,6 +145,7 @@ export function useArticles() {
           body: 'Design patterns for creating reusable and maintainable composables...',
           description:
             'Explore design patterns that will help you create better composables in Vue applications.',
+          published: true,
           createdAt: '2024-12-01T00:00:00Z',
           authorId: 1,
           author: {
